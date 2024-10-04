@@ -1,0 +1,44 @@
+﻿import "google/protobuf/timestamp.proto";
+
+syntax = "proto3";
+
+option csharp_namespace = "EnduroPortal.GrpcServer";
+
+package event;
+
+// The greeting service definition.
+service Events {
+  //Get all events
+  rpc GetEvents () returns (EventsResponse);
+  //Get event
+  rpc GetEvent (EventRequest) returns (EventResponse);
+}
+
+
+// The response message containing the greetings.
+message EventsResponse {
+	repeated EventSummaryBrief events = 1;
+}
+
+message EventSummaryBrief{
+	int32 Id = 1;
+	string Name = 2;
+	string Description = 3;
+	string Location = 4;
+	google.protobuf.Timestamp Date = 5;
+}
+
+
+message EventRequest{
+	int32 id = 1;
+}
+
+message EventResponse{
+	int32 Id = 1;
+	string Name = 2;
+	string Description = 3;
+	string Location = 4;
+	google.protobuf.Timestamp Date = 5;
+	int32 ParticipiantNumbers = 6;
+}
+
