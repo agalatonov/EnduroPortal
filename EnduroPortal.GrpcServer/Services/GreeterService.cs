@@ -1,4 +1,3 @@
-using EnduroPortal.GrpcServer;
 using Grpc.Core;
 
 namespace EnduroPortal.GrpcServer.Services

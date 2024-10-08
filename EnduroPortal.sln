@@ -3,7 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWebApi", "UserWebApi\UserWebApi.csproj", "{18264EA2-CB05-4681-9989-2240D08FAFBB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnduroPortal.SDK", "EnduroPortal.SDK\EnduroPortal.SDK.csproj", "{4201F380-353D-4DDE-A2B2-7658C147F891}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnduroPortal.GrpcServer", "EnduroPortal.GrpcServer\EnduroPortal.GrpcServer.csproj", "{B8B7BA84-29DD-48D3-AA2E-9C113F292F51}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{DD38D2BE-E001-4A1E-8FEB-FECE8B9EA745}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18264EA2-CB05-4681-9989-2240D08FAFBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18264EA2-CB05-4681-9989-2240D08FAFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18264EA2-CB05-4681-9989-2240D08FAFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18264EA2-CB05-4681-9989-2240D08FAFBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4201F380-353D-4DDE-A2B2-7658C147F891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4201F380-353D-4DDE-A2B2-7658C147F891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4201F380-353D-4DDE-A2B2-7658C147F891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4201F380-353D-4DDE-A2B2-7658C147F891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B7BA84-29DD-48D3-AA2E-9C113F292F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B7BA84-29DD-48D3-AA2E-9C113F292F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B7BA84-29DD-48D3-AA2E-9C113F292F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B7BA84-29DD-48D3-AA2E-9C113F292F51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD38D2BE-E001-4A1E-8FEB-FECE8B9EA745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD38D2BE-E001-4A1E-8FEB-FECE8B9EA745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD38D2BE-E001-4A1E-8FEB-FECE8B9EA745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD38D2BE-E001-4A1E-8FEB-FECE8B9EA745}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
