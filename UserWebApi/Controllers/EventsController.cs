@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
+using EnduroPortal.SDK;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
-using UserWebApi.Services;
 
 namespace UserWebApi.Controllers
 {
@@ -10,31 +10,31 @@ namespace UserWebApi.Controllers
     public class EventsController : ControllerBase
     {
         private readonly ILogger<EventsController> _logger;
-        private readonly IEventsService _eventsService;
+        private readonly IEventsActionGrpcService _userActionsGrpcService;
 
-        public EventsController(ILogger<EventsController> logger, IEventsService eventsService)
+        public EventsController(ILogger<EventsController> logger, IEventsActionGrpcService userActionsGrpcService)
         {
             _logger = logger;
-            _eventsService = eventsService;
+            _userActionsGrpcService = userActionsGrpcService;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(Event), StatusCodes.Status200OK)]
         [Produces(MediaTypeNames.Application.Json)]
-        [Route("GetEvent/{id}")]
-        public async Task<IActionResult> GetEvent([FromRoute] int id)
+        [Route("/event/{*slug}")]
+        public async Task<IActionResult> GetEvent(string slug)
         {
-            var result = await _eventsService.GetEvent(id);
+            var result = await _userActionsGrpcService.GetEvent(slug);
             return Ok(result);
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Event>), StatusCodes.Status200OK)]
         [Produces(MediaTypeNames.Application.Json)]
-        [Route("GetEvents")]
-        public async Task<IActionResult> GetEvents()
+        [Route("/events/{*year}")]
+        public async Task<IActionResult> GetEvents(int year)
         {
-            var result = await _eventsService.GetEvents();
+            var result = await _userActionsGrpcService.GetEvents(year);
             return Ok(result);
         }
 

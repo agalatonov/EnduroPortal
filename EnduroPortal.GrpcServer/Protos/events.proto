@@ -26,8 +26,8 @@ message EventsResponse {
 }
 
 message EventSummaryBrief{
-	int32 Id = 1;
-	string Name = 2;
+	string Name = 1;
+	string Slug = 2;
 	string Description = 3;
 	string Location = 4;
 	google.protobuf.Timestamp Date = 5;
@@ -35,15 +35,14 @@ message EventSummaryBrief{
 
 
 message EventRequest{
-	int32 id = 1;
+	string slug = 1;
 }
 
 message EventResponse{
-	int32 Id = 1;
-	string Name = 2;
+	string Name = 1;
+	string Slug = 2;
 	string Description = 3;
 	string Location = 4;
 	google.protobuf.Timestamp Date = 5;
-	int32 ParticipiantNumbers = 6;
 }
 
