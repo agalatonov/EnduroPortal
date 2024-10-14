@@ -1,0 +1,40 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "EnduroPortal.GrpcServer";
+
+package participiant;
+
+service Participiant {
+
+  rpc AddParticipiant (AddParticipiantRequest) returns (AddParticipiantResponse){};
+
+  rpc RemoveParticipiant (RemovePatricipianRequest) returns (RemovePatricipianResponse){};
+
+  rpc GetParticipiants (GetParticipiantsRequest) returns (GetParticipiantsResponse){};
+}
+
+message AddParticipiantRequest {
+	string EventSlug = 1;
+	string ParticipiantName = 2;
+	string Email = 4;
+}
+
+message AddParticipiantResponse {
+	string result = 1;
+}
+
+message RemovePatricipianRequest{
+	string Email = 1;
+}
+
+message RemovePatricipianResponse{
+	string result = 1;
+}
+
+message GetParticipiantsRequest{
+	string EventSlug = 1;
+}
+
+message GetParticipiantsResponse{
+	string result = 1;
+}
