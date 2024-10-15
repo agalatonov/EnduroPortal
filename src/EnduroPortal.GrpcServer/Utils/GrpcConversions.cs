@@ -1,13 +1,14 @@
 ﻿using Google.Protobuf.WellKnownTypes;
-using Infrastructure.Models;
+using dbModels = Infrastructure.Models;
 
 namespace EnduroPortal.GrpcServer.Utils
 {
-    public class GrpcConversions
+    public static class GrpcConversions
     {
-        internal static Event Convert(AddEventRequest addEventRequest)
+        internal static dbModels.Event GetEvent(AddEventRequest addEventRequest)
         {
-            var result = new Event{
+            var result = new dbModels.Event
+            {
                 Name = addEventRequest.Name,
                 Description = addEventRequest.Description,
                 Slug = addEventRequest.Slug,
@@ -18,7 +19,7 @@ namespace EnduroPortal.GrpcServer.Utils
             return result;
         }
 
-        internal static void GetEventResponse(Event eventdb, ref GetEventResponse response)
+        internal static void GetEventResponse(dbModels.Event eventdb, ref GetEventResponse response)
         {
             response.Name = eventdb.Name;
             response.Description = eventdb.Description;
@@ -27,12 +28,32 @@ namespace EnduroPortal.GrpcServer.Utils
             response.Location = eventdb.Location;
         }
 
-        internal static GetEventResponse ConvertToGrpcEvent(List<Event> events)
+        internal static GetEventsResponse GetEventsResponse(List<dbModels.Event> events)
         {
+            var response = new GetEventsResponse();
+
             foreach (var e in events)
             {
+                var eventResponse = new GetEventResponse();
+                GetEventResponse(e, ref eventResponse);
 
+                response.Events.Add(eventResponse);
             }
+
+            return response;
+        }
+
+        internal static dbModels.Participiant GetParticipiant(AddParticipiantRequest addParticipiantRequest)
+        {
+            var result = new dbModels.Participiant
+            {
+                Name = addParticipiantRequest.Name,
+                EventSlug = addParticipiantRequest.EventSlug,
+                Email = addParticipiantRequest.Email,
+                Phone = addParticipiantRequest.Phone
+            };
+
+            return result;
         }
     }
 }

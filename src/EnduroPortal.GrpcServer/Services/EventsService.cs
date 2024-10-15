@@ -1,5 +1,4 @@
 ﻿using EnduroPortal.GrpcServer.Utils;
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -18,34 +17,17 @@ public class EventsService : Events.EventsBase
 
     public override async Task<GetEventsResponse> GetEvents(GetEventsRequest request, ServerCallContext context)
     {
-        //var response = new GetEventsResponse();
-        //response.Events.Add(new EventSummaryBrief
-        //{
-        //    Name = "test",
-        //    Date = DateTime.UtcNow.ToTimestamp(),
-        //    Slug = "test",
-        //    Description = "desc",
-        //    Location = "NN"
-
-        //});
-
-
         var events = await _dbContext.Events.ToListAsync();
+        var response = GrpcConversions.GetEventsResponse(events);
 
-        var response = new GetEventsResponse();
-        foreach (var e in events)
-        {
-            response.Events.Add(GrpcConversions.Convert(e));
-        }
-
-        return (response);
+        return response;
     }
 
     public override async Task<GetEventResponse> GetEvent(GetEventRequest request, ServerCallContext context)
     {
         var response = new GetEventResponse();
 
-        var result = await _dbContext.Events.FirstOrDefaultAsync(x => x.Slug == request.Slug);
+        var result = await _dbContext.Events.FirstOrDefaultAsync(e => string.Equals(e.Slug, request.Slug, StringComparison.InvariantCultureIgnoreCase));
         if (result != null)
         {
             GrpcConversions.GetEventResponse(result, ref response);
@@ -62,14 +44,15 @@ public class EventsService : Events.EventsBase
     {
         var response = new AddEventResponse();
 
-        var result = await _dbContext.Events.FirstOrDefaultAsync(x => x.Slug == request.Slug);
-        if (result != null)
+        var result = await _dbContext.Events.FirstOrDefaultAsync(e => string.Equals(e.Slug, request.Slug, StringComparison.InvariantCultureIgnoreCase));
+        if (!_dbContext.Events.Any(e => e.Slug == request.Slug))
         {
-            response.Result = "Event by slug was't found";
+            await _dbContext.Events.AddAsync(GrpcConversions.GetEvent(request));
+            await _dbContext.SaveChangesAsync();
         }
         else
         {
-            _dbContext.Events.Add(GrpcConversions.Convert(request));
+            response.Result = "Event by slug was't found";
         }
 
         return response;
@@ -79,15 +62,11 @@ public class EventsService : Events.EventsBase
     {
         var response = new RemoveEventResponse();
 
-        var result = await _dbContext.Events.FirstOrDefaultAsync(x => x.Slug == request.Slug);
-        if (result != null)
-        {
-            _dbContext.Events.Remove(result);
-        }
-        else
-        {
-            response.Result = "Event by slug was't found";
-        }
+        var rowAffected = await _dbContext.Events
+                      .Where(e => string.Equals(e.Slug, request.Slug, StringComparison.InvariantCultureIgnoreCase))
+                      .ExecuteDeleteAsync();
+
+        response.Result = rowAffected == 0 ? "" : $"Event with slug '{request.Slug}' is not exist";
 
         return response;
     }

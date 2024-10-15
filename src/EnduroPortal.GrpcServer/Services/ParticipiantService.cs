@@ -1,40 +1,48 @@
-﻿using Grpc.Core;
+﻿using EnduroPortal.GrpcServer.Utils;
+using Grpc.Core;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace EnduroPortal.GrpcServer.Services
 {
-    public class ParticipiantService: Participiant.ParticipiantBase
+    public class ParticipiantService : Participiant.ParticipiantBase
     {
         private readonly EnduroPortalDBContext _dbContext;
 
-        public ParticipiantService(EnduroPortalDBContext dBContext) 
+        public ParticipiantService(EnduroPortalDBContext dBContext)
         {
             _dbContext = dBContext;
         }
 
-        public override Task<AddParticipiantResponse> AddParticipiant(AddParticipiantRequest request, ServerCallContext context)
+        public override async Task<AddParticipiantResponse> AddParticipiant(AddParticipiantRequest request, ServerCallContext context)
         {
             var response = new AddParticipiantResponse();
 
-            if(!_dbContext.Participiants.Any(p => p.Email == request.Email)
+            if (!_dbContext.Participiants.Any(p => string.Equals(p.Email, request.Email, StringComparison.InvariantCultureIgnoreCase)))
             {
-                var 
+                var participiant = GrpcConversions.GetParticipiant(request);
 
-                _dbContext.Participiants.Add();
+                await _dbContext.Participiants.AddAsync(participiant);
+                await _dbContext.SaveChangesAsync();
             }
             else
             {
-
+                response.Result = $"Email should be unique. Participant with email '{request.Email}' is already registred";
             }
 
-            return Task.FromResult(response);
+            return response;
         }
 
-        public override Task<RemovePatricipianResponse> RemoveParticipiant(RemovePatricipianRequest request, ServerCallContext context)
+        public override async Task<RemovePatricipianResponse> RemoveParticipiant(RemovePatricipianRequest request, ServerCallContext context)
         {
-            return base.RemoveParticipiant(request, context);
+            var rowAffected = await _dbContext.Participiants
+                .Where(p => string.Equals(p.Email, request.Email, StringComparison.InvariantCultureIgnoreCase))
+                .ExecuteDeleteAsync();
+
+            var response = new RemovePatricipianResponse();
+            response.Result = rowAffected == 0 ? "" : $"participiant with email '{request.Email}' is not registred";
+
+            return response;
         }
 
         public override Task<GetParticipiantsResponse> GetParticipiants(GetParticipiantsRequest request, ServerCallContext context)

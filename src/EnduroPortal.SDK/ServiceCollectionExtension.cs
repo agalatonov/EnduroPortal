@@ -11,6 +11,11 @@ namespace EnduroPortal.SDK
             {
                 client.Address = new Uri("http://grpc_server:7265");
             });
+            services.AddGrpcClient<Participiant.ParticipiantClient>(client =>
+            {
+                client.Address = new Uri("http://grpc_server:7265");
+            });
+
 
             services.AddScoped<IEventsActionGrpcService, EventsActionGrpcService>();
             services.AddScoped<IParticipiantGrpcService, ParticipiantGrpcService>();

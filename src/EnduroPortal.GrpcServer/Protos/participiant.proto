@@ -15,7 +15,8 @@ service Participiant {
 
 message AddParticipiantRequest {
 	string EventSlug = 1;
-	string ParticipiantName = 2;
+	string Name = 2;
+	string Phone = 3;
 	string Email = 4;
 }
 

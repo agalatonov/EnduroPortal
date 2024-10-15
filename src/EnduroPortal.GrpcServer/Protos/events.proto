@@ -18,7 +18,6 @@ service Events {
   rpc RemoveEvent (RemoveEventRequest) returns (RemoveEventResponse){};
 }
 
-
 // The response message containing the greetings.
 message GetEventsRequest {
 	int32 year = 1;
@@ -26,17 +25,8 @@ message GetEventsRequest {
 
 // The response message containing the greetings.
 message GetEventsResponse {
-	repeated EventSummaryBrief events = 1;
+	repeated GetEventResponse events = 1;
 }
-
-message EventSummaryBrief{
-	string Name = 1;
-	string Slug = 2;
-	string Description = 3;
-	string Location = 4;
-	google.protobuf.Timestamp Date = 5;
-}
-
 
 message GetEventRequest{
 	string slug = 1;

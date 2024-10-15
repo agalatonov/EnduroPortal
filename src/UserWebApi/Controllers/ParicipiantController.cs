@@ -19,7 +19,7 @@ namespace UserWebApi.Controllers
 
         [HttpPost]
         [Route("/add")]
-        public async Task<IActionResult> AddParticipiant(ParticipantRegistrationDTO participantRegistrationDTO)
+        public async Task<IActionResult> AddParticipiant(AddParticipiantDTO participantRegistrationDTO)
         {
             try
             {

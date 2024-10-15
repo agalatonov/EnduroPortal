@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-    public class ParticipantRegistrationDTO
+    public class AddParticipiantDTO
     {
         public required int EventSlud;
         public required string Name;

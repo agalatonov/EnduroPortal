@@ -18,6 +18,20 @@ services:
       depends_on:
         - grpc_server
 
+   admin_web_api:
+      container_name: admin_web_api
+      build:
+         context: .
+         dockerfile: ./src/AdminWebApi/Dockerfile
+      ports:
+        - 8082:8082
+      environment:
+        - ASPNETCORE_HTTP_PORTS=8082
+      networks:
+        - enduro-portal-dev
+      depends_on:
+        - grpc_server
+
    grpc_server:
         container_name: grpc_server
         build:
@@ -29,3 +43,23 @@ services:
           - 7265:7265
         environment:
           - ASPNETCORE_HTTP_PORTS=7265
+          - ConnectionStrings__DefaultConnection=User ID =admin;Password=password;Server=app_db;Port=5432;Database=EnduroPortal; Integrated Security=true;Pooling=true;
+          - ASPNETCORE_URLS=http://+:80
+
+   app_db:
+     image: postgres:latest
+     container_name: app_db
+     environment:
+       - POSTGRES_USER=admin
+       - POSTGRES_PASSWORD=password
+       - POSTGRES_DB=EnduroPortal
+     ports:
+       - "5433:5432"
+     restart: always
+     volumes:
+       - app_data:/var/lib/postgresql/data
+     networks:
+       - enduro-portal-dev
+
+volumes:
+  app_data:

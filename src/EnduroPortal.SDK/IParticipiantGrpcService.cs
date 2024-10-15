@@ -6,23 +6,23 @@ namespace EnduroPortal.SDK
     public interface IParticipiantGrpcService
     {
         Task<string> DeleteParticipiant(string participiantEmail);
-        Task<string> AddParticipiant(ParticipantRegistrationDTO participantRegistrationDTO);
+        Task<string> AddParticipiant(AddParticipiantDTO participantRegistrationDTO);
     }
 
-    public class ParticipiantGrpcService: IParticipiantGrpcService
+    public class ParticipiantGrpcService : IParticipiantGrpcService
     {
-        private readonly Events.EventsClient _eventsClient;
-        public ParticipiantGrpcService(Events.EventsClient eventsClient) 
+        private readonly Participiant.ParticipiantClient _participiantClient;
+        public ParticipiantGrpcService(Participiant.ParticipiantClient participiantClient)
         {
-            _eventsClient = eventsClient;
+            _participiantClient = participiantClient;
         }
 
-        public async Task<string> AddParticipiant(ParticipantRegistrationDTO participantRegistrationDTO)
+        public async Task<string> AddParticipiant(AddParticipiantDTO participantRegistrationDTO)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> DeleteParticipiant(string participiantEmail)
+        public async Task<string> DeleteParticipiant(string participiantEmail)
         {
             throw new NotImplementedException();
         }

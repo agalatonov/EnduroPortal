@@ -23,6 +23,7 @@
 
 	<ItemGroup>
 		<Protobuf Include="..\EnduroPortal.GrpcServer\Protos\events.proto" GrpcServices="Client" />
+		<Protobuf Include="..\EnduroPortal.GrpcServer\Protos\participiant.proto" GrpcServices="Client" />
 	</ItemGroup>
 
 </Project>
