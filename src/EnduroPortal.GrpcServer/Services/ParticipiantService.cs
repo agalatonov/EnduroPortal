@@ -18,7 +18,8 @@ namespace EnduroPortal.GrpcServer.Services
         {
             var response = new AddParticipiantResponse();
 
-            if (!_dbContext.Participiants.Any(p => string.Equals(p.Email, request.Email, StringComparison.InvariantCultureIgnoreCase)))
+            if (!_dbContext.Participiants
+                .Any(p => string.Equals(p.Email, request.Email, StringComparison.InvariantCultureIgnoreCase)))
             {
                 var participiant = GrpcConversions.GetParticipiant(request);
 
@@ -45,9 +46,15 @@ namespace EnduroPortal.GrpcServer.Services
             return response;
         }
 
-        public override Task<GetParticipiantsResponse> GetParticipiants(GetParticipiantsRequest request, ServerCallContext context)
+        public override async Task<GetParticipiantsResponse> GetParticipiants(GetParticipiantsRequest request, ServerCallContext context)
         {
-            return base.GetParticipiants(request, context);
+            var participiants = await _dbContext.Participiants
+                .Where(p => string.Equals(p.EventSlug, request.EventSlug, StringComparison.InvariantCultureIgnoreCase))
+                .ToListAsync();
+
+            var response = GrpcConversions.GetParticipiantsResponse(participiants);
+
+            return response;
         }
     }
 }

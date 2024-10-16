@@ -13,7 +13,7 @@ namespace Infrastructure
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=app_db;Port=5433;Database=EnduroPortal;Username=admin;Password=password");
+                optionsBuilder.UseNpgsql("Host=app_db;Port=5432;Database=EnduroPortal;Username=admin;Password=password");
             }
         }
     }

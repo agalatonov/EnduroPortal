@@ -2,8 +2,9 @@
 {
     public class AddParticipiantDTO
     {
-        public required int EventSlud;
+        public required string EventSlud;
         public required string Name;
         public required string Email;
+        public required string Phone;
     }
 }

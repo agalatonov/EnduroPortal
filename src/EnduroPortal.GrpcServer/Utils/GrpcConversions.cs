@@ -55,5 +55,29 @@ namespace EnduroPortal.GrpcServer.Utils
 
             return result;
         }
+
+        internal static GetParticipiantsResponse GetParticipiantsResponse(List<dbModels.Participiant> dbParticipiants)
+        {
+            var response = new GetParticipiantsResponse();
+
+            foreach (var p in dbParticipiants)
+            {
+                response.Participiants.Add(GetParticipiantDesc(p));
+            }
+            return response;
+        }
+
+        internal static ParticipiantDesc GetParticipiantDesc(dbModels.Participiant dbParticipiant)
+        {
+            var result = new ParticipiantDesc
+            {
+                Name = dbParticipiant.Name,
+                EventSlug = dbParticipiant.EventSlug,
+                Email = dbParticipiant.Email,
+                Phone = dbParticipiant.Phone
+            };
+
+            return result;
+        }
     }
 }

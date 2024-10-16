@@ -21,7 +21,7 @@ message AddParticipiantRequest {
 }
 
 message AddParticipiantResponse {
-	string result = 1;
+	string Result = 1;
 }
 
 message RemovePatricipianRequest{
@@ -29,7 +29,7 @@ message RemovePatricipianRequest{
 }
 
 message RemovePatricipianResponse{
-	string result = 1;
+	string Result = 1;
 }
 
 message GetParticipiantsRequest{
@@ -37,5 +37,12 @@ message GetParticipiantsRequest{
 }
 
 message GetParticipiantsResponse{
-	string result = 1;
+	repeated ParticipiantDesc Participiants = 1;
+}
+
+message ParticipiantDesc{
+	string Name = 1;
+	string EventSlug = 2;
+	string Email = 3;
+	string Phone = 4;
 }

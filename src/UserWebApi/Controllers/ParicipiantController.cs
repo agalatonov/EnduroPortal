@@ -49,7 +49,7 @@ namespace UserWebApi.Controllers
                     _logger.LogInformation($"Processing request: delete participiant by email: '{email}'");
                 }
 
-                var result = await _participiantGrpcService.DeleteParticipiant(email);
+                var result = await _participiantGrpcService.RemoveParticipiant(email);
 
                 return string.IsNullOrEmpty(result) ? Ok() : BadRequest(result);
             }

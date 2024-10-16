@@ -60,5 +60,39 @@ namespace EnduroPortal.SDK.Utils
 
             return result;
         }
+
+        internal static AddParticipiantRequest GetAddParticipiantRequest(AddParticipiantDTO addParticipiantDTO)
+        {
+            var result = new AddParticipiantRequest
+            {
+                Name = addParticipiantDTO.Name,
+                EventSlug = addParticipiantDTO.EventSlud,
+                Email = addParticipiantDTO.Email,
+                Phone = addParticipiantDTO.Phone
+            };
+
+            return result;
+        }
+
+        internal static List<Domain.Models.Entities.Participiant> GetParticipiants(GetParticipiantsResponse getParticipiantsResponse)
+        {
+            var result = new List<Domain.Models.Entities.Participiant>();
+
+            foreach (var p in getParticipiantsResponse.Participiants)
+            {
+                result.Add(
+                    new Domain.Models.Entities.Participiant
+                    {
+                        Name = p.Name,
+                        EventSlug = p.EventSlug,
+                        Email = p.Email,
+                        Phone = p.Phone
+                    }
+                );
+            }
+
+            return result;
+
+        }
     }
 }

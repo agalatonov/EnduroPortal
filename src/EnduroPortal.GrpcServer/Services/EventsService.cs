@@ -27,7 +27,7 @@ public class EventsService : Events.EventsBase
     {
         var response = new GetEventResponse();
 
-        var result = await _dbContext.Events.FirstOrDefaultAsync(e => string.Equals(e.Slug, request.Slug, StringComparison.InvariantCultureIgnoreCase));
+        var result = await _dbContext.Events.FirstOrDefaultAsync(e => e.Slug.ToLower() == request.Slug.ToLower());
         if (result != null)
         {
             GrpcConversions.GetEventResponse(result, ref response);
@@ -44,11 +44,11 @@ public class EventsService : Events.EventsBase
     {
         var response = new AddEventResponse();
 
-        var result = await _dbContext.Events.FirstOrDefaultAsync(e => string.Equals(e.Slug, request.Slug, StringComparison.InvariantCultureIgnoreCase));
+        var result = await _dbContext.Events.FirstOrDefaultAsync(e => e.Slug.ToLower() == request.Slug.ToLower());
         if (!_dbContext.Events.Any(e => e.Slug == request.Slug))
         {
             await _dbContext.Events.AddAsync(GrpcConversions.GetEvent(request));
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
         else
         {
