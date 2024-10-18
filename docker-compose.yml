@@ -37,6 +37,8 @@ services:
         build:
           context: .
           dockerfile: ./src/EnduroPortal.GrpcServer/Dockerfile
+        depends_on:
+          - app_db
         networks:
           - enduro-portal-dev
         ports:
@@ -49,9 +51,9 @@ services:
      image: postgres:latest
      container_name: app_db
      environment:
+       - POSTGRES_DB=EnduroPortal
        - POSTGRES_USER=admin
        - POSTGRES_PASSWORD=password
-       - POSTGRES_DB=EnduroPortal
      ports:
        - "5433:5432"
      restart: always

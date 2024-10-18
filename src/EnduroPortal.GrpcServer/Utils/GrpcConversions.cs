@@ -9,6 +9,7 @@ namespace EnduroPortal.GrpcServer.Utils
         {
             var result = new dbModels.Event
             {
+                Id = Guid.NewGuid(),
                 Name = addEventRequest.Name,
                 Description = addEventRequest.Description,
                 Slug = addEventRequest.Slug,
@@ -47,6 +48,7 @@ namespace EnduroPortal.GrpcServer.Utils
         {
             var result = new dbModels.Participiant
             {
+                Id = Guid.NewGuid(),
                 Name = addParticipiantRequest.Name,
                 EventSlug = addParticipiantRequest.EventSlug,
                 Email = addParticipiantRequest.Email,
@@ -78,6 +80,15 @@ namespace EnduroPortal.GrpcServer.Utils
             };
 
             return result;
+        }
+
+        internal static void GetEventResponse(dbModels.Event eventdb, ref AddEventResponse response)
+        {
+            response.Name = eventdb.Name;
+            response.Description = eventdb.Description;
+            response.Slug = eventdb.Slug;
+            response.Date = eventdb.Date.ToTimestamp();
+            response.Location = eventdb.Location;
         }
     }
 }

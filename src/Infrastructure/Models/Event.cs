@@ -1,9 +1,12 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace Infrastructure.Models
 {
     public class Event
     {
-        public string Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public required string Name { get; set; }
         public required string Slug { get; set; }
         public required string Description { get; set; }

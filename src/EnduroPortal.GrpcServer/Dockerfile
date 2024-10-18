@@ -12,7 +12,7 @@ WORKDIR /src
 COPY ["src/EnduroPortal.GrpcServer/EnduroPortal.GrpcServer.csproj", "src/EnduroPortal.GrpcServer/"]
 COPY ["src/Infrastructure/Infrastructure.csproj", "src/Infrastructure/"]
 COPY ["src/Domain/Domain.csproj", "src/Domain/"]
-RUN dotnet restore "./src/EnduroPortal.GrpcServer/./EnduroPortal.GrpcServer.csproj"
+RUN dotnet restore "./src/EnduroPortal.GrpcServer/EnduroPortal.GrpcServer.csproj"
 COPY . .
 WORKDIR "/src/src/EnduroPortal.GrpcServer"
 RUN dotnet build "./EnduroPortal.GrpcServer.csproj" -c $BUILD_CONFIGURATION -o /app/build

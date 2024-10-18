@@ -8,7 +8,6 @@ namespace Infrastructure
         public DbSet<Event> Events { get; set; }
         public DbSet<Participiant> Participiants { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

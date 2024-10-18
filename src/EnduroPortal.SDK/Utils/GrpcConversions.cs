@@ -92,7 +92,6 @@ namespace EnduroPortal.SDK.Utils
             }
 
             return result;
-
         }
     }
 }

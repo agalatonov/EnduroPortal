@@ -44,15 +44,18 @@ public class EventsService : Events.EventsBase
     {
         var response = new AddEventResponse();
 
-        var result = await _dbContext.Events.FirstOrDefaultAsync(e => e.Slug.ToLower() == request.Slug.ToLower());
         if (!_dbContext.Events.Any(e => e.Slug == request.Slug))
         {
-            await _dbContext.Events.AddAsync(GrpcConversions.GetEvent(request));
+            var dbEvent = GrpcConversions.GetEvent(request);
+
+            await _dbContext.Events.AddAsync(dbEvent);
             _dbContext.SaveChanges();
+
+            GrpcConversions.GetEventResponse(dbEvent, ref response);
         }
         else
         {
-            response.Result = "Event by slug was't found";
+            response.Result = "Event by slug is already exist";
         }
 
         return response;

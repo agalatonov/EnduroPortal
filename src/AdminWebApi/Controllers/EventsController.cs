@@ -61,6 +61,7 @@ namespace AdminWebApi.Controllers
             }
 
             var result = await _userActionsGrpcService.AddEvent(addEventDTO);
+
             return Ok(result);
         }
     }
