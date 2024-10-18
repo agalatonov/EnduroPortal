@@ -1,5 +1,5 @@
 ﻿using Domain.Models;
-using EnduroPortal.SDK;
+using EnduroPortal.SDK.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
@@ -28,7 +28,7 @@ namespace UserWebApi.Controllers
             {
                 _logger.LogInformation($"Processing request: try get event by slug: '{slug}'");
             }
-           
+
             var result = await _userActionsGrpcService.GetEvent(slug);
             return Ok(result);
         }

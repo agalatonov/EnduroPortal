@@ -1,6 +1,7 @@
 using EnduroPortal.GrpcServer.Services;
 using Infrastructure;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 Thread.Sleep(5000);
 
@@ -8,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
-builder.Services.AddDbContext<EnduroPortalDBContext>();
+builder.Services.AddDbContext<EnduroPortalDBContext>(optional =>
+    optional.UseNpgsql(builder.Configuration.GetConnectionString(name: "PostgresDbConnection")));
 
 var app = builder.Build();
 

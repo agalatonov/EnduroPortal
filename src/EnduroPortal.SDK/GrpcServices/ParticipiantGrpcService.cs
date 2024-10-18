@@ -1,16 +1,10 @@
 ﻿using Domain.Models;
 using EnduroPortal.GrpcServer;
+using EnduroPortal.SDK.Interfaces;
 using EnduroPortal.SDK.Utils;
 
-namespace EnduroPortal.SDK
+namespace EnduroPortal.SDK.GrpcServices
 {
-    public interface IParticipiantGrpcService
-    {
-        Task<string> RemoveParticipiant(string participiantEmail);
-        Task<string> AddParticipiant(AddParticipiantDTO participantRegistrationDTO);
-        Task<List<Domain.Models.Entities.Participiant>> GetParticipiants(string eventSlug);
-    }
-
     public class ParticipiantGrpcService : IParticipiantGrpcService
     {
         private readonly Participiant.ParticipiantClient _participiantClient;

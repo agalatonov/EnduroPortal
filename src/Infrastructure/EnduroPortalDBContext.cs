@@ -8,12 +8,9 @@ namespace Infrastructure
         public DbSet<Event> Events { get; set; }
         public DbSet<Participiant> Participiants { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public EnduroPortalDBContext(DbContextOptions<EnduroPortalDBContext> options) : base(options)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql("Host=app_db;Port=5432;Database=EnduroPortal;Username=admin;Password=password");
-            }
+
         }
     }
 }

@@ -1,17 +1,11 @@
 ﻿using Domain.Models;
 using Domain.Models.DTO;
 using EnduroPortal.GrpcServer;
+using EnduroPortal.SDK.Interfaces;
 using EnduroPortal.SDK.Utils;
 
-namespace EnduroPortal.SDK
+namespace EnduroPortal.SDK.GrpcServices
 {
-    public interface IEventsActionGrpcService
-    {
-        Task<List<Event>> GetEvents(int year);
-        Task<Event> GetEvent(string slug);
-        Task<Event> AddEvent(AddEventDTO addEventDTO);
-    }
-
     public class EventsActionGrpcService : IEventsActionGrpcService
     {
         private readonly Events.EventsClient _eventsClient;
@@ -21,16 +15,21 @@ namespace EnduroPortal.SDK
             _eventsClient = eventsClient;
         }
 
-        public async Task<Event> GetEvent(string slug)
+        public async Task<Event?> GetEvent(string slug)
         {
             var grpcRequest = new GetEventRequest
             {
                 Slug = slug
             };
 
-            var grpcResponse = await _eventsClient.GetEventAsync(grpcRequest);
+            var getEventResponse = await _eventsClient.GetEventAsync(grpcRequest);
 
-            var result = GrpcConversions.GetEvent(grpcResponse);
+            if (!string.IsNullOrEmpty(getEventResponse.Result))
+            {
+                return null;
+            }
+
+            var result = GrpcConversions.GetEvent(getEventResponse);
 
             return result;
         }
@@ -49,11 +48,15 @@ namespace EnduroPortal.SDK
             return result;
         }
 
-        public async Task<Event> AddEvent(AddEventDTO addEventDTO)
+        public async Task<Event?> AddEvent(AddEventDTO addEventDTO)
         {
             var request = GrpcConversions.GetAddEventRequest(addEventDTO);
             var addEventResponse = await _eventsClient.AddEventAsync(request);
 
+            if (addEventResponse.Result != null)
+            {
+                return null;
+            }
             var result = GrpcConversions.GetEvent(addEventResponse);
             return result;
         }

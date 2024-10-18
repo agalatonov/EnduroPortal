@@ -17,7 +17,7 @@ public class EventsService : Events.EventsBase
 
     public override async Task<GetEventsResponse> GetEvents(GetEventsRequest request, ServerCallContext context)
     {
-        var events = await _dbContext.Events.ToListAsync();
+        var events = await _dbContext.Events.Where(e => e.Date > new DateTime(request.Year, 1, 1)).ToListAsync();
         var response = GrpcConversions.GetEventsResponse(events);
 
         return response;

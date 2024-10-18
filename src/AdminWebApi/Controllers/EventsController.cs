@@ -1,6 +1,6 @@
 ﻿using Domain.Models;
 using Domain.Models.DTO;
-using EnduroPortal.SDK;
+using EnduroPortal.SDK.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
@@ -31,6 +31,11 @@ namespace AdminWebApi.Controllers
             }
 
             var result = await _userActionsGrpcService.GetEvent(slug);
+
+            if (result is null)
+            {
+                return BadRequest($"Event with slug {slug} is already exist");
+            }
             return Ok(result);
         }
 
@@ -46,6 +51,7 @@ namespace AdminWebApi.Controllers
             }
 
             var result = await _userActionsGrpcService.GetEvents(year);
+
             return Ok(result);
         }
 
@@ -62,6 +68,10 @@ namespace AdminWebApi.Controllers
 
             var result = await _userActionsGrpcService.AddEvent(addEventDTO);
 
+            if (result is null)
+            {
+                return BadRequest($"Event with slug {addEventDTO.Slug} is already exist");
+            }
             return Ok(result);
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Domain.Models;
-using EnduroPortal.SDK;
+using EnduroPortal.SDK.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UserWebApi.Controllers
@@ -11,7 +11,7 @@ namespace UserWebApi.Controllers
         private readonly ILogger<EventsController> _logger;
         private readonly IParticipiantGrpcService _participiantGrpcService;
 
-        public ParicipiantController(ILogger<EventsController> logger, IParticipiantGrpcService participiantGrpcService) 
+        public ParicipiantController(ILogger<EventsController> logger, IParticipiantGrpcService participiantGrpcService)
         {
             _logger = logger;
             _participiantGrpcService = participiantGrpcService;
@@ -30,9 +30,9 @@ namespace UserWebApi.Controllers
 
                 var result = await _participiantGrpcService.AddParticipiant(participantRegistrationDTO);
 
-                return string.IsNullOrEmpty(result)? Ok(): BadRequest(result);
+                return string.IsNullOrEmpty(result) ? Ok() : BadRequest(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
