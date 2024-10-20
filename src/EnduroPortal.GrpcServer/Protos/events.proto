@@ -8,22 +8,22 @@ import "google/protobuf/timestamp.proto";
 
 // The greeting service definition.
 service Events {
-  //Get all events
+
   rpc GetEvents (GetEventsRequest) returns (GetEventsResponse){};
-  //Get event
+
   rpc GetEvent (GetEventRequest) returns (GetEventResponse){};
 
   rpc AddEvent (AddEventRequest) returns (AddEventResponse){};
 
-  rpc RemoveEvent (RemoveEventRequest) returns (RemoveEventResponse){};
+  rpc DeleteEvent (DeleteEventRequest) returns (DeleteEventResponse){};
+
+  rpc UpdateEvent(UpdateEventRequest) returns (UpdateEventResponse){};
 }
 
-// The response message containing the greetings.
 message GetEventsRequest {
 	int32 year = 1;
 }
 
-// The response message containing the greetings.
 message GetEventsResponse {
 	repeated GetEventResponse events = 1;
 }
@@ -38,7 +38,7 @@ message GetEventResponse{
 	string Description = 3;
 	string Location = 4;
 	google.protobuf.Timestamp Date = 5;
-	string result = 6;
+	string Result = 6;
 }
 
 message AddEventRequest{
@@ -55,14 +55,31 @@ message AddEventResponse{
 	string Description = 3;
 	string Location = 4;
 	google.protobuf.Timestamp Date = 5;
-	string result = 6;
+	string Result = 6;
 }
 
-message RemoveEventRequest{
+message DeleteEventRequest{
 	string slug = 1;
 }
 
-message RemoveEventResponse{
-	string result = 1;
+message DeleteEventResponse{
+	string Result = 1;
+}
+
+message UpdateEventRequest{
+	string Name = 1;
+	string Slug = 2;
+	string Description = 3;
+	string Location = 4;
+	google.protobuf.Timestamp Date = 5;
+}
+
+message UpdateEventResponse{
+	string Name = 1;
+	string Slug = 2;
+	string Description = 3;
+	string Location = 4;
+	google.protobuf.Timestamp Date = 5;
+	string Result = 6;
 }
 

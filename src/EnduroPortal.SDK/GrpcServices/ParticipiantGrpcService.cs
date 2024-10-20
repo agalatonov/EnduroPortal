@@ -33,7 +33,7 @@ namespace EnduroPortal.SDK.GrpcServices
             return response;
         }
 
-        public async Task<string> RemoveParticipiant(string participiantEmail)
+        public async Task<string> RemoveParticipiant(string eventSlug, string participiantEmail)
         {
             var removeParticipiantRequest = new RemovePatricipianRequest { Email = participiantEmail };
 

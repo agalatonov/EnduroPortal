@@ -8,5 +8,7 @@ namespace EnduroPortal.SDK.Interfaces
         Task<List<Event>> GetEvents(int year);
         Task<Event?> GetEvent(string slug);
         Task<Event?> AddEvent(AddEventDTO addEventDTO);
+        Task<Event?> UpdateEvent(UpdateEventDTO updateEventDTO);
+        Task<string> DeleteEvent(string slug);
     }
 }

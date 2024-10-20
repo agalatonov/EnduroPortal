@@ -26,6 +26,7 @@ message AddParticipiantResponse {
 
 message RemovePatricipianRequest{
 	string Email = 1;
+	string EventSlug = 2;
 }
 
 message RemovePatricipianResponse{

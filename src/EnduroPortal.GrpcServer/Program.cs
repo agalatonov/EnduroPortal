@@ -7,10 +7,19 @@ Thread.Sleep(5000);
 
 var builder = WebApplication.CreateBuilder(args);
 
+DotNetEnv.Env.Load(path: "..\\..\\SolutionItems\\.env");
+builder.Configuration.AddEnvironmentVariables();
+var message = Environment.GetEnvironmentVariable("db_service_name");
+
+
 // Add services to the container.
 builder.Services.AddGrpc();
 builder.Services.AddDbContext<EnduroPortalDBContext>(optional =>
     optional.UseNpgsql(builder.Configuration.GetConnectionString(name: "PostgresDbConnection")));
+
+
+
+Console.WriteLine($"{message}");
 
 var app = builder.Build();
 

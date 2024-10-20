@@ -53,12 +53,34 @@ namespace EnduroPortal.SDK.GrpcServices
             var request = GrpcConversions.GetAddEventRequest(addEventDTO);
             var addEventResponse = await _eventsClient.AddEventAsync(request);
 
-            if (addEventResponse.Result != null)
+            if (String.IsNullOrEmpty(addEventResponse.Result))
             {
                 return null;
             }
             var result = GrpcConversions.GetEvent(addEventResponse);
             return result;
+        }
+
+        public async Task<Event?> UpdateEvent(UpdateEventDTO updateEventDTO)
+        {
+            var request = GrpcConversions.GetUpdateEventRequest(updateEventDTO);
+            var addEventResponse = await _eventsClient.UpdateEventAsync(request);
+
+            if (!String.IsNullOrEmpty(addEventResponse.Result))
+            {
+                return null;
+            }
+            var result = GrpcConversions.GetEvent(addEventResponse);
+            return result;
+        }
+
+        public async Task<string> DeleteEvent(string slug)
+        {
+            var request = new DeleteEventRequest { Slug = slug };
+
+            var deleteEventResponse = await _eventsClient.DeleteEventAsync(request);
+
+            return deleteEventResponse.Result;
         }
     }
 }

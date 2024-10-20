@@ -47,6 +47,21 @@ namespace EnduroPortal.SDK.Utils
             return result;
         }
 
+        internal static Event GetEvent(UpdateEventResponse grpcResponse)
+        {
+            var result = new Event
+            {
+                Name = grpcResponse.Name,
+                Date = grpcResponse.Date.ToDateTime(),
+                Slug = grpcResponse.Slug,
+                Description = grpcResponse.Description,
+                Location = grpcResponse.Location
+            };
+
+            return result;
+        }
+
+
         internal static AddEventRequest GetAddEventRequest(AddEventDTO addEventDTO)
         {
             var result = new AddEventRequest
@@ -90,6 +105,21 @@ namespace EnduroPortal.SDK.Utils
                     }
                 );
             }
+
+            return result;
+        }
+
+
+        internal static UpdateEventRequest GetUpdateEventRequest(UpdateEventDTO addEventDTO)
+        {
+            var result = new UpdateEventRequest
+            {
+                Name = addEventDTO.Name,
+                Slug = addEventDTO.Slug,
+                Description = addEventDTO.Description,
+                Location = addEventDTO.Location,
+                Date = addEventDTO.Date.ToTimestamp()
+            };
 
             return result;
         }

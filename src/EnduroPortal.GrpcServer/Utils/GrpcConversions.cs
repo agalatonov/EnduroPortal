@@ -29,6 +29,15 @@ namespace EnduroPortal.GrpcServer.Utils
             response.Location = eventdb.Location;
         }
 
+        internal static void UpdateEventResponse(dbModels.Event eventdb, ref UpdateEventResponse response)
+        {
+            response.Name = eventdb.Name;
+            response.Description = eventdb.Description;
+            response.Slug = eventdb.Slug;
+            response.Date = eventdb.Date.ToTimestamp();
+            response.Location = eventdb.Location;
+        }
+
         internal static GetEventsResponse GetEventsResponse(List<dbModels.Event> events)
         {
             var response = new GetEventsResponse();
@@ -42,6 +51,15 @@ namespace EnduroPortal.GrpcServer.Utils
             }
 
             return response;
+        }
+
+        internal static void UpdateEvent(ref dbModels.Event @event, UpdateEventRequest addEventRequest)
+        {
+            @event.Name = addEventRequest.Name;
+            @event.Description = addEventRequest.Description;
+            @event.Slug = addEventRequest.Slug;
+            @event.Date = addEventRequest.Date.ToDateTime();
+            @event.Location = addEventRequest.Location;
         }
 
         internal static dbModels.Participiant GetParticipiant(AddParticipiantRequest addParticipiantRequest)
