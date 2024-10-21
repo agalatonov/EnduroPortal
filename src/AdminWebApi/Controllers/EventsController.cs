@@ -93,7 +93,7 @@ namespace AdminWebApi.Controllers
             }
 
             var result = await _eventActionsGrpcService.DeleteEvent(slug);
-            if(string.IsNullOrEmpty(result))
+            if (string.IsNullOrEmpty(result))
             {
                 if (_logger.IsEnabled(LogLevel.Information))
                 {

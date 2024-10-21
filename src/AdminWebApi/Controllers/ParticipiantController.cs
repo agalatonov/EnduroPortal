@@ -1,6 +1,7 @@
-﻿using Domain.Models;
+﻿using Domain.Models.DTO;
 using EnduroPortal.SDK.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 
 namespace AdminWebApi.Controllers
 {
@@ -18,6 +19,9 @@ namespace AdminWebApi.Controllers
         }
 
         [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("/add")]
         public async Task<IActionResult> AddParticipiant(AddParticipiantDTO participantRegistrationDTO)
         {
@@ -25,7 +29,7 @@ namespace AdminWebApi.Controllers
             {
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
-                    _logger.LogInformation($"Processing request: participiant registration by email: '{participantRegistrationDTO.Email}'");
+                    _logger.LogInformation($"AdminWebApi.ParicipiantController.AddParticipiant(): Processing request: participiant registration by email: '{participantRegistrationDTO.Email}'");
                 }
 
                 var result = await _participiantGrpcService.AddParticipiant(participantRegistrationDTO);
@@ -46,7 +50,7 @@ namespace AdminWebApi.Controllers
             {
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
-                    _logger.LogInformation($"Processing request: delete participiant by email: '{email}'");
+                    _logger.LogInformation($"AdminWebApi.ParicipiantController.DeleteParticipiant(): Processing request: delete participiant by email: '{email}'");
                 }
 
                 var result = await _participiantGrpcService.RemoveParticipiant(eventSlug, email);

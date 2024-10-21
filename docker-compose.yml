@@ -38,18 +38,18 @@ services:
           context: .
           dockerfile: ./src/EnduroPortal.GrpcServer/Dockerfile
         depends_on:
-          - ${db_service_name}
+          - app_db
         networks:
           - enduro-portal-dev
         ports:
           - 7265:7265
         environment:
+          - PostgresDbConnection=Port=5432;Database=EnduroPortal;Username=admin;Password=password;Host=app_db;
           - ASPNETCORE_HTTP_PORTS=7265
-          - ConnectionStrings=User ID =admin;Password=password;Server=${db_service_name};Port=5432;Database=EnduroPortal; Integrated Security=true;Pooling=true;
 
    app_db:
      image: postgres:latest
-     container_name: ${db_service_name}
+     container_name: app_db
      environment:
        - POSTGRES_DB=EnduroPortal
        - POSTGRES_USER=admin

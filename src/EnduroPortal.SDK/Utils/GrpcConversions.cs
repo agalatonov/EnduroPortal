@@ -1,13 +1,14 @@
 ﻿using Domain.Models;
 using Domain.Models.DTO;
+using Domain.Models.Entities;
 using EnduroPortal.GrpcServer;
 using Google.Protobuf.WellKnownTypes;
 
 namespace EnduroPortal.SDK.Utils
 {
-    public class GrpcConversions
+    public class GrpcConversions : IGrpcConversions
     {
-        internal static List<Event> GetEvents(GetEventsResponse grpcResponse)
+        public List<Event> GetEvents(GetEventsResponse grpcResponse)
         {
             List<Event> result = new List<Event>();
 
@@ -19,7 +20,7 @@ namespace EnduroPortal.SDK.Utils
             return result;
         }
 
-        internal static Event GetEvent(GetEventResponse grpcResponse)
+        public Event GetEvent(GetEventResponse grpcResponse)
         {
             var result = new Event
             {
@@ -33,7 +34,7 @@ namespace EnduroPortal.SDK.Utils
             return result;
         }
 
-        internal static Event GetEvent(AddEventResponse grpcResponse)
+        public Event GetEvent(AddEventResponse grpcResponse)
         {
             var result = new Event
             {
@@ -47,7 +48,7 @@ namespace EnduroPortal.SDK.Utils
             return result;
         }
 
-        internal static Event GetEvent(UpdateEventResponse grpcResponse)
+        public Event GetEvent(UpdateEventResponse grpcResponse)
         {
             var result = new Event
             {
@@ -62,7 +63,7 @@ namespace EnduroPortal.SDK.Utils
         }
 
 
-        internal static AddEventRequest GetAddEventRequest(AddEventDTO addEventDTO)
+        public AddEventRequest GetAddEventRequest(AddEventDTO addEventDTO)
         {
             var result = new AddEventRequest
             {
@@ -76,7 +77,7 @@ namespace EnduroPortal.SDK.Utils
             return result;
         }
 
-        internal static AddParticipiantRequest GetAddParticipiantRequest(AddParticipiantDTO addParticipiantDTO)
+        public AddParticipiantRequest GetAddParticipiantRequest(AddParticipiantDTO addParticipiantDTO)
         {
             var result = new AddParticipiantRequest
             {
@@ -89,14 +90,14 @@ namespace EnduroPortal.SDK.Utils
             return result;
         }
 
-        internal static List<Domain.Models.Entities.Participiant> GetParticipiants(GetParticipiantsResponse getParticipiantsResponse)
+        public List<Participiant> GetParticipiants(GetParticipiantsResponse getParticipiantsResponse)
         {
-            var result = new List<Domain.Models.Entities.Participiant>();
+            var result = new List<Participiant>();
 
             foreach (var p in getParticipiantsResponse.Participiants)
             {
                 result.Add(
-                    new Domain.Models.Entities.Participiant
+                    new Participiant
                     {
                         Name = p.Name,
                         EventSlug = p.EventSlug,
@@ -110,7 +111,7 @@ namespace EnduroPortal.SDK.Utils
         }
 
 
-        internal static UpdateEventRequest GetUpdateEventRequest(UpdateEventDTO addEventDTO)
+        public UpdateEventRequest GetUpdateEventRequest(UpdateEventDTO addEventDTO)
         {
             var result = new UpdateEventRequest
             {

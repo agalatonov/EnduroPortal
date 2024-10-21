@@ -1,13 +1,13 @@
 ﻿using Google.Protobuf.WellKnownTypes;
-using dbModels = Infrastructure.Models;
+using Infrastructure.Models;
 
 namespace EnduroPortal.GrpcServer.Utils
 {
-    public static class GrpcConversions
+    public class GrpcConversions : IGrpcConversions
     {
-        internal static dbModels.Event GetEvent(AddEventRequest addEventRequest)
+        public Event GetEvent(AddEventRequest addEventRequest)
         {
-            var result = new dbModels.Event
+            var result = new Event
             {
                 Id = Guid.NewGuid(),
                 Name = addEventRequest.Name,
@@ -20,7 +20,7 @@ namespace EnduroPortal.GrpcServer.Utils
             return result;
         }
 
-        internal static void GetEventResponse(dbModels.Event eventdb, ref GetEventResponse response)
+        public void GetEventResponse(Event eventdb, ref GetEventResponse response)
         {
             response.Name = eventdb.Name;
             response.Description = eventdb.Description;
@@ -29,7 +29,7 @@ namespace EnduroPortal.GrpcServer.Utils
             response.Location = eventdb.Location;
         }
 
-        internal static void UpdateEventResponse(dbModels.Event eventdb, ref UpdateEventResponse response)
+        public void UpdateEventResponse(Event eventdb, ref UpdateEventResponse response)
         {
             response.Name = eventdb.Name;
             response.Description = eventdb.Description;
@@ -38,7 +38,7 @@ namespace EnduroPortal.GrpcServer.Utils
             response.Location = eventdb.Location;
         }
 
-        internal static GetEventsResponse GetEventsResponse(List<dbModels.Event> events)
+        public GetEventsResponse GetEventsResponse(List<Event> events)
         {
             var response = new GetEventsResponse();
 
@@ -53,7 +53,7 @@ namespace EnduroPortal.GrpcServer.Utils
             return response;
         }
 
-        internal static void UpdateEvent(ref dbModels.Event @event, UpdateEventRequest addEventRequest)
+        public void UpdateEvent(ref Event @event, UpdateEventRequest addEventRequest)
         {
             @event.Name = addEventRequest.Name;
             @event.Description = addEventRequest.Description;
@@ -62,9 +62,9 @@ namespace EnduroPortal.GrpcServer.Utils
             @event.Location = addEventRequest.Location;
         }
 
-        internal static dbModels.Participiant GetParticipiant(AddParticipiantRequest addParticipiantRequest)
+        public Participiant GetParticipiant(AddParticipiantRequest addParticipiantRequest)
         {
-            var result = new dbModels.Participiant
+            var result = new Participiant
             {
                 Id = Guid.NewGuid(),
                 Name = addParticipiantRequest.Name,
@@ -76,7 +76,7 @@ namespace EnduroPortal.GrpcServer.Utils
             return result;
         }
 
-        internal static GetParticipiantsResponse GetParticipiantsResponse(List<dbModels.Participiant> dbParticipiants)
+        public GetParticipiantsResponse GetParticipiantsResponse(List<Participiant> dbParticipiants)
         {
             var response = new GetParticipiantsResponse();
 
@@ -87,7 +87,7 @@ namespace EnduroPortal.GrpcServer.Utils
             return response;
         }
 
-        internal static ParticipiantDesc GetParticipiantDesc(dbModels.Participiant dbParticipiant)
+        public ParticipiantDesc GetParticipiantDesc(Participiant dbParticipiant)
         {
             var result = new ParticipiantDesc
             {
@@ -100,7 +100,7 @@ namespace EnduroPortal.GrpcServer.Utils
             return result;
         }
 
-        internal static void GetEventResponse(dbModels.Event eventdb, ref AddEventResponse response)
+        public void GetAddEventResponse(Event eventdb, ref AddEventResponse response)
         {
             response.Name = eventdb.Name;
             response.Description = eventdb.Description;

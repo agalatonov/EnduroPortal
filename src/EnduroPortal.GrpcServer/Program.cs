@@ -1,4 +1,5 @@
 using EnduroPortal.GrpcServer.Services;
+using EnduroPortal.GrpcServer.Utils;
 using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -7,33 +8,27 @@ Thread.Sleep(5000);
 
 var builder = WebApplication.CreateBuilder(args);
 
-DotNetEnv.Env.Load(path: "..\\..\\SolutionItems\\.env");
-builder.Configuration.AddEnvironmentVariables();
-var message = Environment.GetEnvironmentVariable("db_service_name");
-
-
 // Add services to the container.
 builder.Services.AddGrpc();
 builder.Services.AddDbContext<EnduroPortalDBContext>(optional =>
-    optional.UseNpgsql(builder.Configuration.GetConnectionString(name: "PostgresDbConnection")));
+    optional.UseNpgsql(Environment.GetEnvironmentVariable("PostgresDbConnection")));
+builder.Services.AddScoped<IGrpcConversions, GrpcConversions>();
 
-
-
-Console.WriteLine($"{message}");
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    //var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
     try
     {
         EnduroPortalContextSeed.SeedAsync(builder.Configuration, scope);
     }
-    catch (Exception)
+    catch (Exception ex)
     {
-        //logger.LogError(ex, $"Error in <{nameof(Program)}>");
+        logger.LogError(ex, $"Error in <{nameof(Program)}>");
     }
 }
 

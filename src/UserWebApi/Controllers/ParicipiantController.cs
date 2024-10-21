@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Models.DTO;
 using EnduroPortal.SDK.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +25,7 @@ namespace UserWebApi.Controllers
             {
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
-                    _logger.LogInformation($"Processing request: participiant registration by email: '{participantRegistrationDTO.Email}'");
+                    _logger.LogInformation($"UserWebApi.ParicipiantController(): Processing request: participiant registration by email: '{participantRegistrationDTO.Email}'");
                 }
 
                 var result = await _participiantGrpcService.AddParticipiant(participantRegistrationDTO);

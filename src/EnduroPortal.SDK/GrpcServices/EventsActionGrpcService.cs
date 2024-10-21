@@ -9,10 +9,12 @@ namespace EnduroPortal.SDK.GrpcServices
     public class EventsActionGrpcService : IEventsActionGrpcService
     {
         private readonly Events.EventsClient _eventsClient;
+        private readonly IGrpcConversions _grpcConversios;
 
-        public EventsActionGrpcService(Events.EventsClient eventsClient)
+        public EventsActionGrpcService(IGrpcConversions grpcConversions, Events.EventsClient eventsClient)
         {
             _eventsClient = eventsClient;
+            _grpcConversios = grpcConversions;
         }
 
         public async Task<Event?> GetEvent(string slug)
@@ -29,7 +31,7 @@ namespace EnduroPortal.SDK.GrpcServices
                 return null;
             }
 
-            var result = GrpcConversions.GetEvent(getEventResponse);
+            var result = _grpcConversios.GetEvent(getEventResponse);
 
             return result;
         }
@@ -43,34 +45,34 @@ namespace EnduroPortal.SDK.GrpcServices
 
             var grpcResponse = await _eventsClient.GetEventsAsync(grpcRequest);
 
-            var result = GrpcConversions.GetEvents(grpcResponse);
+            var result = _grpcConversios.GetEvents(grpcResponse);
 
             return result;
         }
 
         public async Task<Event?> AddEvent(AddEventDTO addEventDTO)
         {
-            var request = GrpcConversions.GetAddEventRequest(addEventDTO);
+            var request = _grpcConversios.GetAddEventRequest(addEventDTO);
             var addEventResponse = await _eventsClient.AddEventAsync(request);
 
-            if (String.IsNullOrEmpty(addEventResponse.Result))
+            if (!String.IsNullOrEmpty(addEventResponse.Result))
             {
                 return null;
             }
-            var result = GrpcConversions.GetEvent(addEventResponse);
+            var result = _grpcConversios.GetEvent(addEventResponse);
             return result;
         }
 
         public async Task<Event?> UpdateEvent(UpdateEventDTO updateEventDTO)
         {
-            var request = GrpcConversions.GetUpdateEventRequest(updateEventDTO);
+            var request = _grpcConversios.GetUpdateEventRequest(updateEventDTO);
             var addEventResponse = await _eventsClient.UpdateEventAsync(request);
 
             if (!String.IsNullOrEmpty(addEventResponse.Result))
             {
                 return null;
             }
-            var result = GrpcConversions.GetEvent(addEventResponse);
+            var result = _grpcConversios.GetEvent(addEventResponse);
             return result;
         }
 

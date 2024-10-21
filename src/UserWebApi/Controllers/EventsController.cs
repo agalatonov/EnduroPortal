@@ -26,10 +26,19 @@ namespace UserWebApi.Controllers
         {
             if (_logger.IsEnabled(LogLevel.Information))
             {
-                _logger.LogInformation($"Processing request: try get event by slug: '{slug}'");
+                _logger.LogInformation($"UserWebApi.Controllers.GetEvent(): request: try get event by slug: '{slug}'");
             }
 
             var result = await _userActionsGrpcService.GetEvent(slug);
+
+            if (result is null)
+            {
+                if (_logger.IsEnabled(LogLevel.Error))
+                {
+                    _logger.LogError($"UserWebApi.Controllers.DeleteEvent(): Event with slug '{slug}' isn't  exist");
+                }
+                return BadRequest($"Event with slug {slug} is already exist");
+            }
             return Ok(result);
         }
 
@@ -41,10 +50,11 @@ namespace UserWebApi.Controllers
         {
             if (_logger.IsEnabled(LogLevel.Information))
             {
-                _logger.LogInformation($"Processing request: get all events by the year: '{year}'");
+                _logger.LogInformation($"UserWebApi.EventsController.GetEvent(): Processing request: get all events by the year: '{year}'");
             }
 
             var result = await _userActionsGrpcService.GetEvents(year);
+
             return Ok(result);
         }
     }
