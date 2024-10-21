@@ -41,7 +41,7 @@ public class EventsService : Events.EventsBase
         var result = await _dbContext.Events.FirstOrDefaultAsync(e => e.Slug.ToLower() == request.Slug.ToLower());
         if (result != null)
         {
-            _grpcConversions.GetEventResponse(result, ref response);
+            _grpcConversions.FillGetEventResponse(result, ref response);
         }
         else
         {
@@ -62,7 +62,7 @@ public class EventsService : Events.EventsBase
             await _dbContext.Events.AddAsync(dbEvent);
             _dbContext.SaveChanges();
 
-            _grpcConversions.GetAddEventResponse(dbEvent, ref response);
+            _grpcConversions.FillAddEventResponse(dbEvent, ref response);
 
             if (_logger.IsEnabled(LogLevel.Information))
             {
@@ -123,7 +123,7 @@ public class EventsService : Events.EventsBase
 
             _dbContext.SaveChanges();
 
-            _grpcConversions.UpdateEventResponse(@event, ref response);
+            _grpcConversions.FillUpdateEventResponse(@event, ref response);
 
             if (_logger.IsEnabled(LogLevel.Information))
             {

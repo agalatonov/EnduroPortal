@@ -20,7 +20,7 @@ namespace EnduroPortal.GrpcServer.Utils
             return result;
         }
 
-        public void GetEventResponse(Event eventdb, ref GetEventResponse response)
+        public void FillGetEventResponse(Event eventdb, ref GetEventResponse response)
         {
             response.Name = eventdb.Name;
             response.Description = eventdb.Description;
@@ -29,7 +29,7 @@ namespace EnduroPortal.GrpcServer.Utils
             response.Location = eventdb.Location;
         }
 
-        public void UpdateEventResponse(Event eventdb, ref UpdateEventResponse response)
+        public void FillUpdateEventResponse(Event eventdb, ref UpdateEventResponse response)
         {
             response.Name = eventdb.Name;
             response.Description = eventdb.Description;
@@ -45,7 +45,7 @@ namespace EnduroPortal.GrpcServer.Utils
             foreach (var e in events)
             {
                 var eventResponse = new GetEventResponse();
-                GetEventResponse(e, ref eventResponse);
+                FillGetEventResponse(e, ref eventResponse);
 
                 response.Events.Add(eventResponse);
             }
@@ -100,7 +100,7 @@ namespace EnduroPortal.GrpcServer.Utils
             return result;
         }
 
-        public void GetAddEventResponse(Event eventdb, ref AddEventResponse response)
+        public void FillAddEventResponse(Event eventdb, ref AddEventResponse response)
         {
             response.Name = eventdb.Name;
             response.Description = eventdb.Description;
