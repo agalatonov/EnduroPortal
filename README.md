@@ -18,7 +18,7 @@
 - gRPC.SDK. Реализация клиента подключения к gRPC серверу и интерфейсов через которые реализована обработка логики WebApi методов
 - Infrastructure. Реализация подключения к db
 - Domain. Проект хранит в себе модели и dto.
-![1 (2)](https://github.com/user-attachments/assets/71e49679-9fa5-4d67-a8f7-ee130c3c8f68)
+![1 (2)](https://github.com/user-attachments/assets/d11ad804-5c1c-4d8d-87d7-f4ea84c8a7b7)
 
 ## Начало работы
 1. Клонировать репозиторий
@@ -34,10 +34,12 @@
 
 После того как приложение запущено, можно будет поработать со Swagger. Функционал для участника и администатора разделен на разные WebApi.
   - Для участника соревнования будет доступны следующие методы: получение всех мероприятий/одного, регистрация на конкретное меороприятие. Данные энпоинты доступны по следующей ссылке: http://localhost:8080/swagger/index.html
-![image](https://github.com/user-attachments/assets/9666b2c9-58dc-4d0c-9234-486f84a169fd)
+![image](https://github.com/user-attachments/assets/302975f4-5cb6-4d7b-8dfe-9305b8b3770a)
+
 
   - Для администратора будет доступен расширенный функциона: создание/редактирование/удаление мероприятия, регистрация/удаление участников.Данные энпоинты доступны по следующей ссылке: http://localhost:8082/swagger/index.html
-![image](https://github.com/user-attachments/assets/5fd337f4-b5d7-4af0-8adf-8e9a7ebb5e3f)
+![image](https://github.com/user-attachments/assets/26f9f7f9-5cd1-47c2-b4f8-e5494eaf1afa)
+
 
 ### Зачем был разработан проект?
 Чтобы был.
