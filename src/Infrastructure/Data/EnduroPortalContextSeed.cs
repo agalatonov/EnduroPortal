@@ -12,7 +12,7 @@ namespace Infrastructure.Data
 
             context.Database.EnsureDeleted();
 
-            if (context.Database.GetPendingMigrations().Any())
+            if (context.Database.IsNpgsql() && context.Database.GetPendingMigrations().Any())
             {
                 context.Database.Migrate();
             }
